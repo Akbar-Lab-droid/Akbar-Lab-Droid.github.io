@@ -4,4 +4,4 @@
 + Mempunyai Berbagai Khodam Yang Bagus
 + Tersimpan Tapi Belum Bisa Permanen
 + Mudah Di akses
-+ website: https://akbar-lab-droid.github.io/
++ website: https://akbar-lab-droid.github.io
