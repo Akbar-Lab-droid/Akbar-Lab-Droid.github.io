@@ -3,111 +3,972 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portofolio Pribadi - Modern, Keren, Bertema Genshin Impact">
-    <meta name="keywords" content="portofolio, genshin impact, UI/UX, developer, anime">
-    <meta name="author" content="Your Name">
-    <link rel="canonical" href="https://yourportfolio.com/#home">
-    <title>Portofolio Genshin - Your Name</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Anime+Ace&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>Hunter Portofolio - Solo Leveling</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #0a0a1f;
+            --secondary: #1a1a3a;
+            --accent: #ff3e3e;
+            --accent-light: #ff6b6b;
+            --gold: #ffd700;
+            --text: #f0f0f0;
+            --text-secondary: #b0b0b0;
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 26, 58, 0.5) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(26, 26, 58, 0.5) 0%, transparent 20%),
+                linear-gradient(to bottom, #0a0a1f, #000000);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, rgba(255, 62, 62, 0.05) 0%, transparent 70%),
+                repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(26, 26, 58, 0.1) 1px, rgba(26, 26, 58, 0.1) 10px);
+            z-index: -1;
+        }
+
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 31, 0.8);
+            border-bottom: 1px solid rgba(255, 62, 62, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: var(--text);
+        }
+
+        /* Page Container */
+        .page-container {
+            padding-top: 80px;
+            min-height: calc(100vh - 150px);
+        }
+
+        /* Home Page */
+        #home {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 62, 62, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            color: var(--text);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, var(--accent), #ff6b6b);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 62, 62, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 62, 62, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 62, 62, 0.1);
+        }
+
+        .hero-image {
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 400px;
+            opacity: 0.3;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 62, 62, 0.5));
+            transform: rotate(10deg);
+        }
+
+        /* About Page */
+        #about {
+            padding: 5rem 5%;
+            display: none;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--gold));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 62, 62, 0.1), rgba(255, 215, 0, 0.1));
+            z-index: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .skills {
+            margin-top: 2rem;
+        }
+
+        .skill-bar {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-weight: 600;
+        }
+
+        .skill-percent {
+            color: var(--gold);
+        }
+
+        .skill-progress {
+            height: 10px;
+            background-color: var(--secondary);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--gold));
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .skill-progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Portfolio Page */
+        #portfolio {
+            padding: 5rem 5%;
+            display: none;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(255, 62, 62, 0.1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 62, 62, 0.2);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            background: rgba(255, 62, 62, 0.2);
+            color: var(--accent-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Page */
+        #contact {
+            padding: 5rem 5%;
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-card {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-detail i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            width: 50px;
+        }
+
+        .contact-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text p, .contact-text a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-text a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            color: var(--text);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 62, 62, 0.3);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: rgba(10, 10, 31, 0.5);
+            border: 1px solid rgba(255, 62, 62, 0.3);
+            border-radius: 5px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(10, 10, 31, 0.8);
+            border-top: 1px solid rgba(255, 62, 62, 0.2);
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background-color: var(--primary);
+                width: 70%;
+                height: calc(100vh - 80px);
+                align-items: center;
+                padding-top: 3rem;
+                gap: 2rem;
+                transition: right 0.5s;
+                border-left: 1px solid rgba(255, 62, 62, 0.2);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-image {
+                width: 300px;
+                opacity: 0.2;
+            }
+
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo"><i class="fas fa-gem"></i> Your Name</div>
-        <ul class="nav-links">
-            <li><a href="/#home" class="active">Home</a></li>
-            <li><a href="/#about">About</a></li>
-            <li><a href="/#portfolio">Portofolio</a></li>
-            <li><a href="/#contact">Kontak</a></li>
-        </ul>
-        <div class="hamburger"><i class="fas fa-bars"></i></div>
-    </nav>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-dragon"></i>
+            <span>HUNTER</span>
+        </div>
+        <nav>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                <li><a href="#" class="nav-link" data-page="portfolio">Portfolio</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Content Container -->
-    <div id="content">
-        <!-- Home Section -->
-        <section id="home" class="hero" data-aos="fade-up">
-            <div id="particles-js"></div>
+    <!-- Page Container -->
+    <div class="page-container">
+        <!-- Home Page -->
+        <section id="home">
             <div class="hero-content">
-                <div id="lottie-character"></div>
-                <h1 data-aos="fade-up" data-aos-delay="200">Selamat Datang, Traveler! Saya <span class="typing-text"></span></h1>
-                <p data-aos="fade-up" data-aos-delay="400">Seorang developer dengan semangat Teyvat, menciptakan karya digital yang magis!</p>
-                <a href="https://wa.me/628978691600?text=Halo,%20saya%20ingin%20konsultasi%20portofolio" class="btn-whatsapp" data-aos="zoom-in" data-aos-delay="600">
-                    <i class="fab fa-whatsapp"></i> Hubungi Saya
-                </a>
+                <h1 class="hero-title floating">SUNG JIN-WOO</h1>
+                <h2 class="hero-subtitle">The Shadow Monarch</h2>
+                <p class="hero-text">Formerly known as the World's Weakest Hunter, I have risen to become the strongest Shadow Monarch. With my army of shadows, I conquer dungeons and protect humanity from monstrous threats.</p>
+                <div class="btn-container">
+                    <a href="#" class="btn" data-page="portfolio">My Work</a>
+                    <a href="#" class="btn btn-outline" data-page="contact">Contact Me</a>
+                </div>
+            </div>
+            <img src="https://i.ibb.co/7nV0t3k/solo-leveling-character.png" alt="Sung Jin-Woo" class="hero-image floating">
+        </section>
+
+        <!-- About Page -->
+        <section id="about">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://i.ibb.co/8XH9zHr/solo-leveling-about.jpg" alt="About Sung Jin-Woo">
+                </div>
+                <div class="about-text">
+                    <h3>The Rise of the Shadow Monarch</h3>
+                    <p>Once the weakest E-rank hunter, I was given a second chance at life after surviving a double dungeon. Now known as the Shadow Monarch, I command an army of shadows and possess abilities beyond any hunter's imagination.</p>
+                    <p>My journey has transformed me from a hunter struggling to support his family to the most powerful being on Earth. I've faced countless S-rank monsters, dungeon bosses, and even other monarchs to protect humanity.</p>
+                    
+                    <div class="skills">
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Shadow Extraction</span>
+                                <span class="skill-percent">100%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Combat Skills</span>
+                                <span class="skill-percent">98%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Dungeon Clearing</span>
+                                <span class="skill-percent">100%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Shadow Command</span>
+                                <span class="skill-percent">99%</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" style="width: 99%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="about" data-aos="fade-up">
-            <div class="glass-card">
-                <h2 data-aos="fade-right">Tentang Saya</h2>
-                <p data-aos="fade-left" data-aos-delay="200">Terinspirasi oleh dunia Genshin Impact, saya menggabungkan kreativitas dan teknologi untuk membangun website dan aplikasi yang menakjubkan.</p>
-                <a href="/#portfolio" class="btn-secondary" data-aos="zoom-in" data-aos-delay="400">Lihat Portofolio</a>
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="portfolio" data-aos="fade-up">
-            <h2 data-aos="zoom-in">Portofolio</h2>
+        <!-- Portfolio Page -->
+        <section id="portfolio">
+            <h2 class="section-title">My Conquests</h2>
             <div class="portfolio-grid">
-                <div class="portfolio-card glass-card anemo" data-aos="flip-left" data-aos-delay="100">
-                    <h3>Website Teyvat</h3>
-                    <p>Website interaktif bertema Genshin Impact dengan animasi dinamis.</p>
-                    <a href="#" class="btn-secondary">Lihat Detail</a>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://i.ibb.co/8b3Zb7b/dungeon-clearance.jpg" alt="Jeju Island Dungeon Clearance">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Jeju Island Dungeon Clearance</h3>
+                        <span class="portfolio-category">S-Rank Raid</span>
+                        <p class="portfolio-description">Led the raid to clear the Jeju Island dungeon, defeating the Ant King and his army with my shadow soldiers.</p>
+                    </div>
                 </div>
-                <div class="portfolio-card glass-card pyro" data-aos="flip-left" data-aos-delay="200">
-                    <h3>Aplikasi Mobile</h3>
-                    <p>Aplikasi mobile dengan UI/UX ala Teyvat.</p>
-                    <a href="#" class="btn-secondary">Lihat Detail</a>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://i.ibb.co/1TQdH0J/red-gate.jpg" alt="Red Gate Incident">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Red Gate Incident</h3>
+                        <span class="portfolio-category">Emergency Response</span>
+                        <p class="portfolio-description">Single-handedly resolved the S-rank gate incident at Yongsan, saving countless lives and preventing catastrophe.</p>
+                    </div>
                 </div>
-                <div class="portfolio-card glass-card hydro" data-aos="flip-left" data-aos-delay="300">
-                    <h3>Desain UI/UX</h3>
-                    <p>Desain antarmuka bertema elemental Genshin.</p>
-                    <a href="#" class="btn-secondary">Lihat Detail</a>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://i.ibb.co/1nvR9c5/instant-dungeon.jpg" alt="Instant Dungeon Mastery">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Instant Dungeon Mastery</h3>
+                        <span class="portfolio-category">Solo Operations</span>
+                        <p class="portfolio-description">Perfected the art of solo dungeon clearing, completing dungeons in record time with 100% efficiency.</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://i.ibb.co/1TzFjYy/shadow-army.jpg" alt="Shadow Army Formation">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">Shadow Army Formation</h3>
+                        <span class="portfolio-category">Strategic Development</span>
+                        <p class="portfolio-description">Created and trained the most powerful army of shadow soldiers, each with unique abilities and specialties.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact" data-aos="fade-up">
-            <h2 data-aos="zoom-in">Hubungi Saya</h2>
-            <p data-aos="fade-up" data-aos-delay="200">Siap untuk petualangan baru? Kirim pesan sekarang!</p>
-            <a href="https://wa.me/628978691600?text=Halo,%20saya%20ingin%20konsultasi" class="btn-whatsapp" data-aos="zoom-in" data-aos-delay="400">
-                <i class="fab fa-whatsapp"></i> Chat via WhatsApp
-            </a>
-            <form class="contact-form glass-card" data-aos="fade-up" data-aos-delay="600">
-                <input type="text" placeholder="Nama" required>
-                <input type="email" placeholder="Email" required>
-                <textarea placeholder="Pesan Anda" required></textarea>
-                <button type="submit" class="btn-secondary">Kirim Pesan</button>
-            </form>
+        <!-- Contact Page -->
+        <section id="contact">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>Get In Touch</h3>
+                        <div class="contact-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-text">
+                                <h4>Location</h4>
+                                <p>Seoul, South Korea</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <a href="mailto:shadowmonarch@hunter.com">shadowmonarch@hunter.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-phone"></i>
+                            <div class="contact-text">
+                                <h4>Phone</h4>
+                                <a href="tel:+821012345678">+82 10 1234 5678</a>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>Available For</h3>
+                        <div class="contact-detail">
+                            <i class="fas fa-dungeon"></i>
+                            <div class="contact-text">
+                                <h4>S-Rank Dungeon Clearing</h4>
+                                <p>Specializing in high-risk gate clearance</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-shield-alt"></i>
+                            <div class="contact-text">
+                                <h4>Protection Services</h4>
+                                <p>VIP and critical infrastructure protection</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-users"></i>
+                            <div class="contact-text">
+                                <h4>Hunter Training</h4>
+                                <p>Advanced combat and strategy training</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
         </section>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>© 2025 Your Name. All Rights Reserved.</p>
-        <p>Kontak: <a href="https://wa.me/628978691600" target="_blank">WhatsApp</a> | Email: yourname@portfolio.com</p>
-        <div class="social-links">
-            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-dragon"></i> SHADOW MONARCH
+            </div>
+            <p>"In this world, the strong eat and the weak are meat. I choose to be the predator."</p>
+            <p class="copyright">© 2023 Sung Jin-Woo. All rights reserved.</p>
         </div>
     </footer>
 
-    <a href="https://wa.me/628978691600?text=Halo%20Your%20Name" class="floating-whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Navigation and Page Switching
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navLinks');
+            const pages = document.querySelectorAll('.page-container > section');
+            const buttons = document.querySelectorAll('.btn[data-page]');
+            
+            // Initialize active page
+            showPage('home');
+            
+            // Navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show selected page
+                    showPage(page);
+                    
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Buttons with page navigation
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    document.querySelector(`.nav-link[data-page="${page}"]`).classList.add('active');
+                    
+                    // Show selected page
+                    showPage(page);
+                });
+            });
+            
+            // Mobile menu toggle
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+            
+            // Page switching function
+            function showPage(pageId) {
+                pages.forEach(page => {
+                    if (page.id === pageId) {
+                        page.style.display = 'block';
+                        // Scroll to top of the page
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        page.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Form submission
+            const contactForm = document.getElementById('messageForm');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Message sent! I will contact you soon.');
+                contactForm.reset();
+            });
+        });
+    </script>
 </body>
 </html>
