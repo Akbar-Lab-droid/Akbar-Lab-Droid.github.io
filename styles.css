@@ -1,0 +1,442 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #F9FAFB;
+    color: #1A237E;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: #1A237E; /* Midnight Blue */
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+}
+
+.navbar .logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FF99CC; /* Sakura Pink */
+    font-family: 'Anime Ace', sans-serif;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.navbar .logo i {
+    margin-right: 8px;
+    font-size: 24px;
+}
+
+.navbar .logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #F9FAFB; /* Soft White */
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: color 0.3s, background 0.3s, transform 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #1A237E;
+    background: #FF99CC; /* Sakura Pink */
+    transform: translateY(-2px);
+}
+
+.hamburger {
+    display: none;
+    font-size: 24px;
+    color: #F9FAFB; /* Soft White */
+    background: #FF99CC; /* Sakura Pink */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.hamburger:hover {
+    transform: scale(1.1);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #1A237E, #FF99CC);
+    position: relative;
+    overflow: hidden;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-content {
+    z-index: 1;
+}
+
+#lottie-character {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+}
+
+.hero h1 {
+    font-size: 60px;
+    color: #F9FAFB;
+    font-family: 'Anime Ace', sans-serif;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    color: #F9FAFB;
+    margin-bottom: 30px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #00E5FF, #0288D1); /* Neon Cyan to Blue */
+    color: #F9FAFB;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: pulse 2s infinite;
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Glass Morphism */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* About Section */
+.about {
+    padding: 80px 50px;
+    text-align: center;
+    background-color: #F9FAFB;
+}
+
+.about h2 {
+    font-size: 36px;
+    color: #1A237E;
+    font-family: 'Anime Ace', sans-serif;
+    margin-bottom: 20px;
+}
+
+.about p {
+    font-size: 18px;
+    color: #6B7280;
+    margin-bottom: 30px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-secondary {
+    display: inline-block;
+    background: linear-gradient(135deg, #1A237E, #FF99CC);
+    color: #F9FAFB;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #FF99CC, #1A237E);
+    transform: scale(1.05);
+}
+
+/* Portfolio Section */
+.portfolio {
+    padding: 80px 50px;
+    background-color: #F9FAFB;
+}
+
+.portfolio h2 {
+    font-size: 36px;
+    color: #1A237E;
+    text-align: center;
+    font-family: 'Anime Ace', sans-serif;
+    margin-bottom: 40px;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.portfolio-card {
+    text-align: center;
+    transition: transform 0.5s;
+}
+
+.portfolio-card h3 {
+    font-size: 24px;
+    color: #1A237E;
+    margin-bottom: 10px;
+}
+
+.portfolio-card p {
+    color: #6B7280;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 20px;
+}
+
+.portfolio-card:hover {
+    transform: rotateY(10deg) scale(1.05);
+}
+
+/* Contact Section */
+.contact {
+    padding: 80px 50px;
+    text-align: center;
+    background-color: #F9FAFB;
+}
+
+.contact h2 {
+    font-size: 36px;
+    color: #1A237E;
+    font-family: 'Anime Ace', sans-serif;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    font-size: 18px;
+    color: #6B7280;
+    margin-bottom: 30px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form input, .contact-form textarea {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    color: #1A237E;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+.contact-form textarea {
+    height: 150px;
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00E5FF; /* Neon Cyan */
+    color: #F9FAFB;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: pulse 2s infinite;
+    text-decoration: none;
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, #1A237E, #FF99CC);
+    color: #F9FAFB;
+    text-align: center;
+    padding: 30px;
+}
+
+footer a {
+    color: #F9FAFB;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #00E5FF;
+}
+
+.social-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a {
+    font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #1A237E; /* Midnight Blue */
+        padding: 20px;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    #lottie-character {
+        width: 150px;
+        height: 150px;
+    }
+
+    .about, .portfolio, .contact {
+        padding: 50px 20px;
+    }
+
+    .glass-card {
+        padding: 20px;
+    }
+
+    .floating-whatsapp {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .logo {
+        font-size: 24px;
+    }
+
+    .navbar .logo i {
+        font-size: 20px;
+    }
+
+    .hamburger {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .btn-whatsapp, .btn-secondary {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+}
