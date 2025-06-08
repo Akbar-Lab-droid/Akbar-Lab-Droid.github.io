@@ -12,7 +12,7 @@ AOS.init({
 // Typing Effect for Hero Section
 if (document.querySelector('.typing-text')) {
     const typed = new Typed('.typing-text', {
-        strings: ['Developer Anime', 'Desainer Kreatif', 'Pencinta Anime'],
+        strings: ['Developer Teyvat', 'Desainer Magis', 'Petualang Digital'],
         typeSpeed: 100,
         backSpeed: 50,
         loop: true,
@@ -24,11 +24,11 @@ if (document.getElementById('particles-js')) {
     particlesJS('particles-js', {
         particles: {
             number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: '#FF99CC' },
-            shape: { type: 'circle' },
+            color: { value: '#FFB300' }, /* Golden Amber */
+            shape: { type: 'star' },
             opacity: { value: 0.5, random: true },
             size: { value: 3, random: true },
-            line_linked: { enable: true, distance: 150, color: '#FF99CC', opacity: 0.4, width: 1 },
+            line_linked: { enable: true, distance: 150, color: '#00C4B4', opacity: 0.4, width: 1 },
             move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out' }
         },
         interactivity: {
@@ -44,7 +44,7 @@ if (document.getElementById('particles-js')) {
 if (document.getElementById('lottie-character')) {
     lottie.loadAnimation({
         container: document.getElementById('lottie-character'),
-        path: 'https://assets.lottiefiles.com/packages/lf20_8q7z5n.json', // Ganti dengan path ke animasi Lottie anime
+        path: 'https://assets.lottiefiles.com/packages/lf20_3vbcfh.json', // Ganti dengan animasi Genshin Impact
         renderer: 'svg',
         loop: true,
         autoplay: true
@@ -54,10 +54,10 @@ if (document.getElementById('lottie-character')) {
 // GSAP for Portfolio Card Hover
 document.querySelectorAll('.portfolio-card').forEach(card => {
     card.addEventListener('mouseenter', () => {
-        gsap.to(card, { rotationY: 10, scale: 1.05, duration: 0.5 });
+        gsap.to(card, { rotationY: 10, scale: 1.05, duration: 0.5, boxShadow: "0 10px 20px rgba(0, 196, 180, 0.5)" });
     });
     card.addEventListener('mouseleave', () => {
-        gsap.to(card, { rotationY: 0, scale: 1, duration: 0.5 });
+        gsap.to(card, { rotationY: 0, scale: 1, duration: 0.5, boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)" });
     });
 });
 
