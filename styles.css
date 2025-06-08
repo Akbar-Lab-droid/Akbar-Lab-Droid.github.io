@@ -2,12 +2,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     scroll-behavior: smooth;
 }
 
 body {
-    background-color: #F9FAFB;
+    background-color: #F5F7FA; /* Starlit White */
     color: #1A237E;
     overflow-x: hidden;
 }
@@ -18,19 +18,20 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 50px;
-    background: #1A237E; /* Midnight Blue */
+    background: rgba(74, 107, 255, 0.9); /* Celestial Blue with slight transparency */
+    backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     transition: background 0.3s;
 }
 
 .navbar .logo {
     font-size: 28px;
     font-weight: 700;
-    color: #FF99CC; /* Sakura Pink */
+    color: #FFB300; /* Golden Amber */
     font-family: 'Anime Ace', sans-serif;
     display: flex;
     align-items: center;
@@ -38,8 +39,9 @@ body {
 }
 
 .navbar .logo i {
-    margin-right: 8px;
+    margin-right: 10px;
     font-size: 24px;
+    color: #00C4B4; /* Emerald Green */
 }
 
 .navbar .logo:hover {
@@ -53,11 +55,11 @@ body {
 }
 
 .nav-links a {
-    color: #F9FAFB; /* Soft White */
+    color: #F5F7FA; /* Starlit White */
     text-decoration: none;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     padding: 8px 16px;
     border-radius: 20px;
     transition: color 0.3s, background 0.3s, transform 0.3s;
@@ -65,15 +67,15 @@ body {
 
 .nav-links a:hover, .nav-links a.active {
     color: #1A237E;
-    background: #FF99CC; /* Sakura Pink */
+    background: #FFB300; /* Golden Amber */
     transform: translateY(-2px);
 }
 
 .hamburger {
     display: none;
     font-size: 24px;
-    color: #F9FAFB; /* Soft White */
-    background: #FF99CC; /* Sakura Pink */
+    color: #F5F7FA; /* Starlit White */
+    background: #FFB300; /* Golden Amber */
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -95,7 +97,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(135deg, #1A237E, #FF99CC);
+    background: linear-gradient(135deg, #4A6BFF, #FFB300);
     position: relative;
     overflow: hidden;
 }
@@ -112,31 +114,31 @@ body {
 }
 
 #lottie-character {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     margin: 0 auto 20px;
 }
 
 .hero h1 {
     font-size: 60px;
-    color: #F9FAFB;
+    color: #F5F7FA;
     font-family: 'Anime Ace', sans-serif;
     margin-bottom: 20px;
 }
 
 .hero p {
     font-size: 20px;
-    color: #F9FAFB;
+    color: #F5F7FA;
     margin-bottom: 30px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btn-whatsapp {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: linear-gradient(135deg, #00E5FF, #0288D1); /* Neon Cyan to Blue */
-    color: #F9FAFB;
+    background: linear-gradient(135deg, #00C4B4, #0288D1); /* Emerald Green to Blue */
+    color: #F5F7FA;
     padding: 15px 30px;
     border-radius: 50px;
     text-decoration: none;
@@ -144,7 +146,7 @@ body {
     font-size: 18px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s, box-shadow 0.3s;
-    animation: pulse 2s infinite;
+    animation: sparkle 2s infinite;
 }
 
 .btn-whatsapp:hover {
@@ -152,21 +154,21 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+@keyframes sparkle {
+    0% { box-shadow: 0 4px 15px rgba(0, 196, 180, 0.5); }
+    50% { box-shadow: 0 4px 25px rgba(0, 196, 180, 0.8); }
+    100% { box-shadow: 0 4px 15px rgba(0, 196, 180, 0.5); }
 }
 
 /* Glass Morphism */
 .glass-card {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(245, 247, 250, 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(245, 247, 250, 0.2);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -179,12 +181,12 @@ body {
 .about {
     padding: 80px 50px;
     text-align: center;
-    background-color: #F9FAFB;
+    background-color: #F5F7FA;
 }
 
 .about h2 {
     font-size: 36px;
-    color: #1A237E;
+    color: #4A6BFF;
     font-family: 'Anime Ace', sans-serif;
     margin-bottom: 20px;
 }
@@ -193,13 +195,13 @@ body {
     font-size: 18px;
     color: #6B7280;
     margin-bottom: 30px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btn-secondary {
     display: inline-block;
-    background: linear-gradient(135deg, #1A237E, #FF99CC);
-    color: #F9FAFB;
+    background: linear-gradient(135deg, #4A6BFF, #FFB300);
+    color: #F5F7FA;
     padding: 12px 24px;
     border-radius: 50px;
     text-decoration: none;
@@ -208,19 +210,19 @@ body {
 }
 
 .btn-secondary:hover {
-    background: linear-gradient(135deg, #FF99CC, #1A237E);
+    background: linear-gradient(135deg, #FFB300, #4A6BFF);
     transform: scale(1.05);
 }
 
 /* Portfolio Section */
 .portfolio {
     padding: 80px 50px;
-    background-color: #F9FAFB;
+    background-color: #F5F7FA;
 }
 
 .portfolio h2 {
     font-size: 36px;
-    color: #1A237E;
+    color: #4A6BFF;
     text-align: center;
     font-family: 'Anime Ace', sans-serif;
     margin-bottom: 40px;
@@ -235,17 +237,30 @@ body {
 .portfolio-card {
     text-align: center;
     transition: transform 0.5s;
+    position: relative;
+}
+
+.portfolio-card.anemo {
+    border: 2px solid #00C4B4;
+}
+
+.portfolio-card.pyro {
+    border: 2px solid #FF4500;
+}
+
+.portfolio-card.hydro {
+    border: 2px solid #1E90FF;
 }
 
 .portfolio-card h3 {
     font-size: 24px;
-    color: #1A237E;
+    color: #4A6BFF;
     margin-bottom: 10px;
 }
 
 .portfolio-card p {
     color: #6B7280;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin-bottom: 20px;
 }
 
@@ -257,12 +272,12 @@ body {
 .contact {
     padding: 80px 50px;
     text-align: center;
-    background-color: #F9FAFB;
+    background-color: #F5F7FA;
 }
 
 .contact h2 {
     font-size: 36px;
-    color: #1A237E;
+    color: #4A6BFF;
     font-family: 'Anime Ace', sans-serif;
     margin-bottom: 20px;
 }
@@ -285,10 +300,10 @@ body {
     padding: 12px;
     border: none;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(245, 247, 250, 0.2);
     backdrop-filter: blur(5px);
-    color: #1A237E;
-    font-family: 'Inter', sans-serif;
+    color: #4A6BFF;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
 }
 
@@ -301,8 +316,8 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #00E5FF; /* Neon Cyan */
-    color: #F9FAFB;
+    background: #00C4B4; /* Emerald Green */
+    color: #F5F7FA;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -312,7 +327,7 @@ body {
     font-size: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    animation: pulse 2s infinite;
+    animation: sparkle 2s infinite;
     text-decoration: none;
 }
 
@@ -322,20 +337,20 @@ body {
 
 /* Footer */
 footer {
-    background: linear-gradient(135deg, #1A237E, #FF99CC);
-    color: #F9FAFB;
+    background: linear-gradient(135deg, #4A6BFF, #FFB300);
+    color: #F5F7FA;
     text-align: center;
     padding: 30px;
 }
 
 footer a {
-    color: #F9FAFB;
+    color: #F5F7FA;
     text-decoration: none;
     transition: color 0.3s;
 }
 
 footer a:hover {
-    color: #00E5FF;
+    color: #00C4B4;
 }
 
 .social-links {
@@ -362,7 +377,8 @@ footer a:hover {
         top: 60px;
         left: 0;
         width: 100%;
-        background: #1A237E; /* Midnight Blue */
+        background: rgba(74, 107, 255, 0.9); /* Celestial Blue */
+        backdrop-filter: blur(10px);
         padding: 20px;
         text-align: center;
     }
