@@ -1,7 +1,3 @@
-# WEBSITE CEK KHODAM KALIAN 🤩
-## Mempunyai Fitur
-+ Cek khodam
-+ Mempunyai Berbagai Khodam Yang Bagus
-+ Tersimpan Tapi Belum Bisa Permanen
-+ Mudah Di akses
+# MY PORTOFOLIO 
+## AKBAR RAMADHAN 
 + website: https://akbar-lab-droid.github.io
