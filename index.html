@@ -3,350 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hunter Portofolio - Solo Leveling</title>
+    <title>AKBAR LAB — Retro Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset & Base Styles */
+        /* ============ RETRO ARCADE STYLE ============ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
 
         :root {
-            --primary: #0a0a1f;
-            --secondary: #1a1a3a;
-            --accent: #ff3e3e;
-            --accent-light: #ff6b6b;
-            --gold: #ffd700;
-            --text: #f0f0f0;
-            --text-secondary: #b0b0b0;
+            --bg: #0d0d1a;
+            --bg2: #141428;
+            --pink: #ff2e88;
+            --cyan: #00e5ff;
+            --yellow: #ffe600;
+            --green: #39ff14;
+            --purple: #b967ff;
+            --text: #e8e8ff;
+            --text-dim: #9a9ac0;
         }
 
         body {
-            background-color: var(--primary);
+            background: var(--bg);
             color: var(--text);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(26, 26, 58, 0.5) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(26, 26, 58, 0.5) 0%, transparent 20%),
-                linear-gradient(to bottom, #0a0a1f, #000000);
-            background-attachment: fixed;
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        body::before {
+        /* CRT scanlines overlay */
+        body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at center, rgba(255, 62, 62, 0.05) 0%, transparent 70%),
-                repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(26, 26, 58, 0.1) 1px, rgba(26, 26, 58, 0.1) 10px);
-            z-index: -1;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.18) 0px,
+                rgba(0, 0, 0, 0.18) 1px,
+                transparent 1px,
+                transparent 4px
+            );
         }
 
-        /* Header & Navigation */
+        h1, h2, h3, .pixel {
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        a { color: var(--cyan); text-decoration: none; }
+        a:hover { color: var(--yellow); }
+
+        ::selection { background: var(--pink); color: #fff; }
+
+        /* Blinking cursor */
+        .blink { animation: blink 1s steps(2) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* ============ HEADER ============ */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
+            padding: 1rem 5%;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            background-color: rgba(10, 10, 31, 0.8);
-            border-bottom: 1px solid rgba(255, 62, 62, 0.2);
+            background: #0d0d1a;
+            border-bottom: 4px solid var(--pink);
+            box-shadow: 0 4px 0 var(--cyan);
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--gold);
-            text-transform: uppercase;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1rem;
+            color: var(--yellow);
+            text-shadow: 3px 3px 0 var(--pink);
             letter-spacing: 1px;
         }
-
-        .logo i {
-            color: var(--accent);
-        }
+        .logo span { color: var(--cyan); }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
+            list-style: none;
         }
 
         .nav-links a {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
             color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            padding: 0.5rem 0;
-            transition: color 0.3s;
+            padding: 0.6rem 0.8rem;
+            border: 3px solid transparent;
+            transition: all 0.15s;
         }
 
-        .nav-links a:hover {
-            color: var(--accent);
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--bg);
+            background: var(--yellow);
+            border-color: var(--yellow);
+            box-shadow: 4px 4px 0 var(--pink);
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
+        .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: var(--yellow); }
+
+        /* ============ LAYOUT ============ */
+        .page-container { padding-top: 90px; min-height: calc(100vh - 150px); }
+
+        section { padding: 3rem 5%; }
+
+        .section-title {
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--yellow);
+            text-shadow: 3px 3px 0 var(--pink);
+            text-transform: uppercase;
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .section-title::before { content: '▶ '; color: var(--cyan); }
+        .section-title::after { content: ' ◀'; color: var(--cyan); }
+
+        /* Pixel panel */
+        .panel {
+            background: var(--bg2);
+            border: 4px solid var(--cyan);
+            box-shadow: 8px 8px 0 var(--pink);
+            padding: 1.5rem;
         }
 
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.8rem;
-            color: var(--text);
-        }
-
-        /* Page Container */
-        .page-container {
-            padding-top: 80px;
-            min-height: calc(100vh - 150px);
-        }
-
-        /* Home Page */
+        /* ============ HOME / HERO ============ */
         #home {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 5rem 5%;
-            position: relative;
-            overflow: hidden;
+            min-height: 80vh;
         }
 
-        .hero-content {
-            max-width: 800px;
-            z-index: 2;
+        .insert-coin {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            color: var(--green);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
         }
 
         .hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #ffd700, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(255, 62, 62, 0.3);
+            font-size: 2.2rem;
+            line-height: 1.6;
+            color: var(--yellow);
+            text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 rgba(0, 229, 255, 0.4);
+            margin-bottom: 1.5rem;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            margin-bottom: 1.5rem;
         }
 
         .hero-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-            color: var(--text);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            max-width: 620px;
+            margin-bottom: 2.5rem;
         }
 
         .btn {
             display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(45deg, var(--accent), #ff6b6b);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.75rem;
+            padding: 1rem 1.8rem;
+            background: var(--pink);
+            color: #fff;
+            border: 4px solid #fff;
+            box-shadow: 6px 6px 0 var(--cyan);
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 62, 62, 0.3);
+            text-transform: uppercase;
+            transition: transform 0.1s;
         }
 
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 62, 62, 0.5);
-        }
+        .btn:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--cyan); color: #fff; }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
+            border-color: var(--yellow);
+            color: var(--yellow);
+            box-shadow: 6px 6px 0 var(--pink);
             margin-left: 1rem;
         }
+        .btn-outline:hover { color: var(--yellow); box-shadow: 3px 3px 0 var(--pink); }
 
-        .btn-outline:hover {
-            background: rgba(255, 62, 62, 0.1);
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .hero-image {
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 400px;
-            opacity: 0.3;
-            z-index: 1;
-            filter: drop-shadow(0 0 20px rgba(255, 62, 62, 0.5));
-            transform: rotate(10deg);
+        .stat-box {
+            border: 3px solid var(--purple);
+            padding: 1rem 1.5rem;
+            min-width: 150px;
+            background: var(--bg2);
+        }
+        .stat-box .num {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.2rem;
+            color: var(--green);
+        }
+        .stat-box .label {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            margin-top: 0.6rem;
         }
 
-        /* About Page */
-        #about {
-            padding: 5rem 5%;
-            display: none;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(to right, var(--accent), var(--gold));
-            border-radius: 2px;
-        }
+        /* ============ ABOUT ============ */
+        #about, #portfolio, #projects, #contact { display: none; }
 
         .about-content {
             display: flex;
-            gap: 3rem;
-            align-items: center;
-            max-width: 1200px;
+            gap: 2.5rem;
+            align-items: flex-start;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .about-image {
             flex: 1;
-            border-radius: 10px;
+            border: 4px solid var(--yellow);
+            box-shadow: 8px 8px 0 var(--cyan);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
+            image-rendering: pixelated;
         }
+        .about-image img { width: 100%; display: block; filter: saturate(1.3) contrast(1.1); }
 
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255, 62, 62, 0.1), rgba(255, 215, 0, 0.1));
-            z-index: 1;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
+        .about-text { flex: 1; }
         .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-        }
-
-        .about-text p {
+            font-size: 0.95rem;
+            color: var(--cyan);
             line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
         }
+        .about-text p { color: var(--text-dim); font-size: 1.4rem; margin-bottom: 1rem; }
 
-        .skills {
-            margin-top: 2rem;
-        }
-
-        .skill-bar {
-            margin-bottom: 1.5rem;
-        }
-
+        .skills { margin-top: 1.5rem; }
+        .skill-bar { margin-bottom: 1.2rem; }
         .skill-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            margin-bottom: 0.4rem;
         }
-
-        .skill-name {
-            font-weight: 600;
-        }
-
-        .skill-percent {
-            color: var(--gold);
-        }
-
+        .skill-info .skill-percent { color: var(--green); }
         .skill-progress {
-            height: 10px;
-            background-color: var(--secondary);
-            border-radius: 5px;
-            overflow: hidden;
+            height: 18px;
+            background: #000;
+            border: 3px solid var(--text-dim);
         }
-
         .skill-progress-bar {
             height: 100%;
-            background: linear-gradient(to right, var(--accent), var(--gold));
-            border-radius: 5px;
-            position: relative;
+            background: repeating-linear-gradient(90deg, var(--pink) 0 8px, var(--yellow) 8px 16px);
         }
 
-        .skill-progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            animation: shine 2s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Portfolio Page */
-        #portfolio {
-            padding: 5rem 5%;
-            display: none;
-        }
-
+        /* ============ PORTFOLIO ============ */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -356,322 +298,184 @@
         }
 
         .portfolio-item {
-            background-color: var(--secondary);
-            border-radius: 10px;
+            background: var(--bg2);
+            border: 4px solid var(--cyan);
+            box-shadow: 8px 8px 0 var(--purple);
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            border: 1px solid rgba(255, 62, 62, 0.1);
+            transition: transform 0.15s;
         }
+        .portfolio-item:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--pink); }
 
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(255, 62, 62, 0.2);
-        }
+        .portfolio-image { width: 100%; height: 200px; overflow: hidden; border-bottom: 4px solid var(--cyan); }
+        .portfolio-image img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; filter: saturate(1.3); }
 
-        .portfolio-image {
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .portfolio-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .portfolio-item:hover .portfolio-image img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-content {
-            padding: 1.5rem;
-        }
-
-        .portfolio-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--gold);
-        }
-
+        .portfolio-content { padding: 1.2rem; }
+        .portfolio-title { font-size: 0.8rem; color: var(--yellow); margin-bottom: 0.8rem; line-height: 1.6; }
         .portfolio-category {
             display: inline-block;
-            background: rgba(255, 62, 62, 0.2);
-            color: var(--accent-light);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.55rem;
+            background: var(--pink);
+            color: #fff;
+            padding: 0.4rem 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+        .portfolio-description { color: var(--text-dim); font-size: 1.35rem; }
+
+        /* ============ PROJECTS (REPOS) ============ */
+        .repo-list { max-width: 900px; margin: 0 auto; }
+        .repo-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border: 3px solid var(--green);
+            background: var(--bg2);
+            padding: 1rem 1.2rem;
             margin-bottom: 1rem;
+            box-shadow: 5px 5px 0 var(--pink);
+            flex-wrap: wrap;
         }
-
-        .portfolio-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+        .repo-row:hover { border-color: var(--yellow); }
+        .repo-name { font-family: 'Press Start 2P', monospace; font-size: 0.65rem; color: var(--cyan); line-height: 1.7; }
+        .repo-desc { color: var(--text-dim); font-size: 1.3rem; margin-top: 0.4rem; }
+        .repo-link {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: var(--bg);
+            background: var(--green);
+            padding: 0.6rem 0.9rem;
+            white-space: nowrap;
         }
+        .repo-link:hover { color: var(--bg); background: var(--yellow); }
 
-        /* Contact Page */
-        #contact {
-            padding: 5rem 5%;
-            display: none;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* ============ CONTACT ============ */
         .contact-container {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
         }
-
-        .contact-info {
-            flex: 1;
-        }
+        .contact-info, .contact-form { flex: 1; }
 
         .contact-card {
-            background-color: var(--secondary);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            margin-bottom: 2rem;
+            background: var(--bg2);
+            border: 4px solid var(--cyan);
+            box-shadow: 8px 8px 0 var(--pink);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
-
         .contact-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-            position: relative;
-            padding-bottom: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--yellow);
+            margin-bottom: 1.2rem;
+            border-bottom: 3px dashed var(--purple);
+            padding-bottom: 0.6rem;
         }
+        .contact-detail { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .contact-detail i { font-size: 1.4rem; color: var(--pink); width: 40px; text-align: center; }
+        .contact-text h4 { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--cyan); margin-bottom: 0.3rem; }
+        .contact-text p, .contact-text a { color: var(--text-dim); font-size: 1.35rem; }
 
-        .contact-card h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .contact-detail {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-detail i {
-            font-size: 1.5rem;
-            color: var(--accent);
-            width: 50px;
-        }
-
-        .contact-text h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .contact-text p, .contact-text a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .contact-text a:hover {
-            color: var(--accent);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            color: var(--text);
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 62, 62, 0.3);
+            width: 48px;
+            height: 48px;
+            background: #000;
+            border: 3px solid var(--yellow);
+            color: var(--yellow);
+            font-size: 1.3rem;
+            box-shadow: 4px 4px 0 var(--pink);
+            transition: transform 0.1s;
         }
+        .social-links a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--pink); color: var(--yellow); }
 
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .contact-form {
-            flex: 1;
-            background-color: var(--secondary);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
+        .form-group { margin-bottom: 1.2rem; }
         .form-group label {
             display: block;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.55rem;
+            color: var(--cyan);
             margin-bottom: 0.5rem;
-            font-weight: 500;
         }
-
         .form-control {
             width: 100%;
             padding: 0.8rem 1rem;
-            background-color: rgba(10, 10, 31, 0.5);
-            border: 1px solid rgba(255, 62, 62, 0.3);
-            border-radius: 5px;
-            color: var(--text);
-            font-size: 1rem;
-            transition: border-color 0.3s;
+            background: #000;
+            border: 3px solid var(--purple);
+            color: var(--green);
+            font-family: 'VT323', monospace;
+            font-size: 1.4rem;
         }
+        .form-control:focus { outline: none; border-color: var(--yellow); }
+        textarea.form-control { min-height: 140px; resize: vertical; }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        /* Footer */
+        /* ============ FOOTER ============ */
         footer {
-            background-color: rgba(10, 10, 31, 0.8);
-            border-top: 1px solid rgba(255, 62, 62, 0.2);
+            border-top: 4px solid var(--pink);
+            box-shadow: 0 -4px 0 var(--cyan);
             padding: 2rem 5%;
             text-align: center;
             margin-top: 2rem;
+            background: #0a0a14;
         }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gold);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.9rem;
+            color: var(--yellow);
+            text-shadow: 3px 3px 0 var(--pink);
             margin-bottom: 1rem;
         }
+        .footer-quote { color: var(--text-dim); font-size: 1.4rem; font-style: italic; }
+        .copyright { color: var(--text-dim); font-size: 1.2rem; margin-top: 1rem; }
 
-        .copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Responsive Styles */
+        /* ============ RESPONSIVE ============ */
         @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-
-            .contact-container {
-                flex-direction: column;
-            }
+            .about-content, .contact-container { flex-direction: column; }
         }
 
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
-                top: 80px;
+                top: 72px;
                 right: -100%;
                 flex-direction: column;
-                background-color: var(--primary);
+                background: var(--bg);
                 width: 70%;
-                height: calc(100vh - 80px);
+                height: calc(100vh - 72px);
                 align-items: center;
-                padding-top: 3rem;
-                gap: 2rem;
-                transition: right 0.5s;
-                border-left: 1px solid rgba(255, 62, 62, 0.2);
+                padding-top: 2rem;
+                gap: 1.5rem;
+                transition: right 0.4s;
+                border-left: 4px solid var(--pink);
             }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .hero-image {
-                width: 300px;
-                opacity: 0.2;
-            }
-
-            .btn-container {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .btn-outline {
-                margin-left: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
+            .nav-links.active { right: 0; }
+            .hamburger { display: block; }
+            .hero-title { font-size: 1.4rem; }
+            .hero-subtitle { font-size: 0.65rem; }
+            .btn-container { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+            .btn-outline { margin-left: 0; }
+            .section-title { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">
-            <i class="fas fa-dragon"></i>
-            <span>HUNTER</span>
-        </div>
+        <div class="logo">AKBAR<span>·LAB</span></div>
         <nav>
             <div class="hamburger" id="hamburger">
                 <i class="fas fa-bars"></i>
             </div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
-                <li><a href="#" class="nav-link" data-page="about">About</a></li>
-                <li><a href="#" class="nav-link" data-page="portfolio">Portfolio</a></li>
-                <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                <li><a href="#" class="nav-link active" data-page="home">HOME</a></li>
+                <li><a href="#" class="nav-link" data-page="about">ABOUT</a></li>
+                <li><a href="#" class="nav-link" data-page="portfolio">QUESTS</a></li>
+                <li><a href="#" class="nav-link" data-page="projects">PROJECTS</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">CONTACT</a></li>
             </ul>
         </nav>
     </header>
@@ -680,16 +484,28 @@
     <div class="page-container">
         <!-- Home Page -->
         <section id="home">
-            <div class="hero-content">
-                <h1 class="hero-title floating">AKBAR RAMADHAN</h1>
-                <h2 class="hero-subtitle">The Shadow Monarch</h2>
-                <p class="hero-text">I am a loner who can adapt anywhere, have a leadership spirit and can do public speaking, I like computer programming languages, and I also like computer networks.</p>
-                <div class="btn-container">
-                    <a href="#" class="btn" data-page="portfolio">My Work</a>
-                    <a href="#" class="btn btn-outline" data-page="contact">Contact Me</a>
+            <div class="insert-coin">● INSERT COIN ●<span class="blink">_</span></div>
+            <h1 class="hero-title">AKBAR<br>RAMADHAN</h1>
+            <h2 class="hero-subtitle">» THE SHADOW MONARCH «</h2>
+            <p class="hero-text">Loner who adapts anywhere. Leadership spirit, public speaking, programming languages, and computer networks. Player 1, ready.</p>
+            <div class="btn-container">
+                <a href="#" class="btn" data-page="portfolio">▶ My Quests</a>
+                <a href="#" class="btn btn-outline" data-page="contact">Contact Me</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <div class="num">18</div>
+                    <div class="label">LANGUAGES</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num">172</div>
+                    <div class="label">CODE EXAMPLES</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num">25+</div>
+                    <div class="label">REPOS</div>
                 </div>
             </div>
-            <img src="https://i.ibb.co/7nV0t3k/solo-leveling-character.png" alt="Sung Jin-Woo" class="hero-image floating">
         </section>
 
         <!-- About Page -->
@@ -697,47 +513,47 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <img src="https://raw.githubusercontent.com/Akbar-Lab-droid/Akbar-Lab-Droid.github.io/refs/heads/main/IMG_20250609_192230.png" alt="About Sung Jin-Woo">
+                    <img src="IMG_20250609_192230.png" alt="Akbar Ramadhan">
                 </div>
                 <div class="about-text">
-                    <h3>I have become an adult and have a leadership spirit </h3>
-                    <p>starting from someone who doesn't know anything, he joins the flag raising team and starts to adapt, then becomes the chairman of the student council and gets into a lot of trouble</p>
-                    <p>I changed after being hit by various school and family problems, making me strong in any battle. </p>
-                    
+                    <h3>FROM ZERO TO PLAYER ONE</h3>
+                    <p>Starting from someone who knew nothing — joined the flag raising team (Paskibra), learned to adapt, became chairman of the student council (OSIS), and faced a lot of trouble along the way.</p>
+                    <p>School and family problems hit hard, but they made me strong in any battle. Now: coding, networks, and building things people can actually learn from.</p>
+
                     <div class="skills">
                         <div class="skill-bar">
                             <div class="skill-info">
-                                <span class="skill-name">Leadership</span>
+                                <span class="skill-name">LEADERSHIP</span>
                                 <span class="skill-percent">90%</span>
                             </div>
                             <div class="skill-progress">
                                 <div class="skill-progress-bar" style="width: 90%"></div>
                             </div>
                         </div>
-                        
+
                         <div class="skill-bar">
                             <div class="skill-info">
-                                <span class="skill-name">Public Speaking</span>
+                                <span class="skill-name">PUBLIC SPEAKING</span>
                                 <span class="skill-percent">88%</span>
                             </div>
                             <div class="skill-progress">
                                 <div class="skill-progress-bar" style="width: 88%"></div>
                             </div>
                         </div>
-                        
+
                         <div class="skill-bar">
                             <div class="skill-info">
-                                <span class="skill-name">Trade</span>
+                                <span class="skill-name">TRADE</span>
                                 <span class="skill-percent">75%</span>
                             </div>
                             <div class="skill-progress">
                                 <div class="skill-progress-bar" style="width: 75%"></div>
                             </div>
                         </div>
-                        
+
                         <div class="skill-bar">
                             <div class="skill-info">
-                                <span class="skill-name">Programming Language </span>
+                                <span class="skill-name">PROGRAMMING</span>
                                 <span class="skill-percent">98%</span>
                             </div>
                             <div class="skill-progress">
@@ -751,50 +567,92 @@
 
         <!-- Portfolio Page -->
         <section id="portfolio">
-            <h2 class="section-title">My Conquests</h2>
+            <h2 class="section-title">My Quests</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="https://raw.githubusercontent.com/Akbar-Lab-droid/Akbar-Lab-Droid.github.io/refs/heads/main/IMG_20250609_175430.jpg" alt="Jeju Island Dungeon Clearance">
+                        <img src="IMG_20250609_175430.jpg" alt="Paskibra">
                     </div>
                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Paskibra</h3>
-                        <span class="portfolio-category">S-Rank Raid</span>
-                        <p class="portfolio-description">I started a new experience by joining the sub-district flag raising team as a danton and also became a flag bearer on Pancasila Day.</p>
+                        <h3 class="portfolio-title">PASKIBRA</h3>
+                        <span class="portfolio-category">S-RANK RAID</span>
+                        <p class="portfolio-description">Joined the sub-district flag raising team as a danton and flag bearer on Pancasila Day.</p>
                     </div>
                 </div>
-                
+
                 <div class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="https://raw.githubusercontent.com/Akbar-Lab-droid/Akbar-Lab-Droid.github.io/refs/heads/main/IMG_20250609_182119.png" alt="Red Gate Incident">
+                        <img src="IMG_20250609_182119.png" alt="Pramuka">
                     </div>
                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Pramuka</h3>
-                        <span class="portfolio-category">A-Rank Raid</span>
-                        <p class="portfolio-description">leading the Scout members to victory and I also became the leader of the ceremony at the event.</p>
+                        <h3 class="portfolio-title">PRAMUKA</h3>
+                        <span class="portfolio-category">A-RANK RAID</span>
+                        <p class="portfolio-description">Led the Scout members to victory and became the leader of the ceremony at the event.</p>
                     </div>
                 </div>
-                
+
                 <div class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="https://raw.githubusercontent.com/Akbar-Lab-droid/Akbar-Lab-Droid.github.io/refs/heads/main/IMG_20250609_185357.png" alt="Instant Dungeon Mastery">
+                        <img src="IMG_20250609_185357.png" alt="OSIS">
                     </div>
                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Instant Dungeon Mastery</h3>
-                        <span class="portfolio-category">Solo Operations</span>
-                        <p class="portfolio-description">I became the chairman of OSIS for the first time at SMK-Alhusna. It turned out that it wasn't as easy as I thought. There were many obstacles and in the end I was able to overcome them. </p>
+                        <h3 class="portfolio-title">OSIS CHAIRMAN</h3>
+                        <span class="portfolio-category">SOLO OPS</span>
+                        <p class="portfolio-description">Became chairman of OSIS at SMK Alhusna. Not as easy as it looked — many obstacles, all overcome.</p>
                     </div>
                 </div>
-                
+
                 <div class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="https://raw.githubusercontent.com/Akbar-Lab-droid/Akbar-Lab-Droid.github.io/refs/heads/main/SnapInsta.to_465500074_475238904938650_5513405550943766324_n.jpg" alt="Shadow Army Formation">
+                        <img src="SnapInsta.to_465500074_475238904938650_5513405550943766324_n.jpg" alt="Lacostar">
                     </div>
                     <div class="portfolio-content">
-                        <h3 class="portfolio-title">Shadow Army Formation</h3>
-                        <span class="portfolio-category">Strategic Development</span>
-                        <p class="portfolio-description">I became a flag-raising troop commander for the Lacostar competition. There were many obstacles on the way to the competition and winning the trophy.</p>
+                        <h3 class="portfolio-title">LACOSTAR TROOP</h3>
+                        <span class="portfolio-category">STRATEGIC OPS</span>
+                        <p class="portfolio-description">Commander of the flag-raising troop for the Lacostar competition — obstacles on the road, trophy at the end.</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Page -->
+        <section id="projects">
+            <h2 class="section-title">My Projects</h2>
+            <div class="repo-list">
+                <div class="repo-row">
+                    <div>
+                        <div class="repo-name">LEARN-ALL-PROGRAMMING-LANGUAGES</div>
+                        <div class="repo-desc">18 languages, 172 real code examples, full mini-courses + 12-week roadmap. In English.</div>
+                    </div>
+                    <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/learn-all-programming-languages" target="_blank" rel="noopener">OPEN ▶</a>
+                </div>
+                <div class="repo-row">
+                    <div>
+                        <div class="repo-name">KURSUS-SEMUA-BAHASA-PEMROGRAMAN</div>
+                        <div class="repo-desc">Kursus lengkap 18 bahasa pemrograman — berbahasa Indonesia, dengan contoh kode nyata.</div>
+                    </div>
+                    <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/kursus-semua-bahasa-pemrograman" target="_blank" rel="noopener">OPEN ▶</a>
+                </div>
+                <div class="repo-row">
+                    <div>
+                        <div class="repo-name">FULL-COURSE-SEMUA-JURUSAN</div>
+                        <div class="repo-desc">Full course untuk mahasiswa semua jurusan: jalur belajar, kursus gratis, dan panduan karier.</div>
+                    </div>
+                    <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/full-course-semua-jurusan" target="_blank" rel="noopener">OPEN ▶</a>
+                </div>
+                <div class="repo-row">
+                    <div>
+                        <div class="repo-name">AWESOME-AI-INDONESIA</div>
+                        <div class="repo-desc">Daftar kurasi ekosistem AI Indonesia: model bahasa, dataset, komunitas, kursus, dan tools.</div>
+                    </div>
+                    <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/awesome-ai-indonesia" target="_blank" rel="noopener">OPEN ▶</a>
+                </div>
+                <div class="repo-row">
+                    <div>
+                        <div class="repo-name">AIPROXCROP — AI LEARNING</div>
+                        <div class="repo-desc">Komunitas belajar AI berbahasa Indonesia. Seri video edukasi "Ayo Belajar Bersama AIPROXCROP", 90 detik per episode.</div>
+                    </div>
+                    <a class="repo-link" href="https://github.com/AIPROXCROP" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
             </div>
         </section>
@@ -805,82 +663,81 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="contact-card">
-                        <h3>Get In Touch</h3>
+                        <h3>GET IN TOUCH</h3>
                         <div class="contact-detail">
                             <i class="fas fa-map-marker-alt"></i>
                             <div class="contact-text">
-                                <h4>Location</h4>
+                                <h4>LOCATION</h4>
                                 <p>Subang, Jawa Barat</p>
                             </div>
                         </div>
                         <div class="contact-detail">
                             <i class="fas fa-envelope"></i>
                             <div class="contact-text">
-                                <h4>Email</h4>
-                                <a href="akbar21688@gmail.com">akbar21688@gmail.com</a>
+                                <h4>EMAIL</h4>
+                                <a href="mailto:akbar21688@gmail.com">akbar21688@gmail.com</a>
                             </div>
                         </div>
                         <div class="contact-detail">
                             <i class="fas fa-phone"></i>
                             <div class="contact-text">
-                                <h4>Phone</h4>
-                                <a href="tel:+628978691600">+62 897-8691-600</a>
+                                <h4>PHONE / WA</h4>
+                                <a href="https://wa.me/628978691600" target="_blank" rel="noopener">+62 897-8691-600</a>
                             </div>
                         </div>
                         <div class="social-links">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="https://github.com/Akbar-Lab-Droid" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://www.instagram.com/xlhomebandung044/" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://wa.me/628978691600" target="_blank" rel="noopener" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
-                    
+
                     <div class="contact-card">
-                        <h3>Available For</h3>
+                        <h3>AVAILABLE FOR</h3>
                         <div class="contact-detail">
-                            <i class="fas fa-dungeon"></i>
+                            <i class="fas fa-code"></i>
                             <div class="contact-text">
-                                <h4>S-Rank Dungeon Clearing</h4>
-                                <p>Specializing in high-risk gate clearance</p>
+                                <h4>WEB &amp; CODING</h4>
+                                <p>Websites, learning repos, and AI projects</p>
                             </div>
                         </div>
                         <div class="contact-detail">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-wifi"></i>
                             <div class="contact-text">
-                                <h4>Protection Services</h4>
-                                <p>VIP and critical infrastructure protection</p>
+                                <h4>XL HOME BANDUNG</h4>
+                                <p>WiFi rumah tanpa kabel &amp; fiber — order via WhatsApp</p>
                             </div>
                         </div>
                         <div class="contact-detail">
                             <i class="fas fa-users"></i>
                             <div class="contact-text">
-                                <h4>Hunter Training</h4>
-                                <p>Advanced combat and strategy training</p>
+                                <h4>TEACHING &amp; SPEAKING</h4>
+                                <p>AI learning community AIPROXCROP</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="contact-form">
-                    <h3>Send a Message</h3>
+                    <h3>SEND A MESSAGE</h3>
                     <form id="messageForm">
                         <div class="form-group">
-                            <label for="name">Your Name</label>
+                            <label for="name">YOUR NAME</label>
                             <input type="text" id="name" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Your Email</label>
+                            <label for="email">YOUR EMAIL</label>
                             <input type="email" id="email" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="subject">Subject</label>
+                            <label for="subject">SUBJECT</label>
                             <input type="text" id="subject" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="message">Your Message</label>
+                            <label for="message">YOUR MESSAGE</label>
                             <textarea id="message" class="form-control" required></textarea>
                         </div>
-                        <button type="submit" class="btn">Send Message</button>
+                        <button type="submit" class="btn">▶ SEND</button>
                     </form>
                 </div>
             </div>
@@ -890,11 +747,9 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">
-                <i class="fas fa-dragon"></i> SHADOW MONARCH
-            </div>
-            <p>"In this world, the strong eat and the weak are meat. I choose to be the predator."</p>
-            <p class="copyright">© 2025 Akbar Ramadhan. All rights reserved.</p>
+            <div class="footer-logo">AKBAR·LAB</div>
+            <p class="footer-quote">"In this world, the strong eat and the weak are meat. I choose to be the predator."</p>
+            <p class="copyright">© 2026 AKBAR RAMADHAN — GAME OVER? NO. PRESS START TO CONTINUE.</p>
         </div>
     </footer>
 
@@ -906,66 +761,60 @@
             const navMenu = document.getElementById('navLinks');
             const pages = document.querySelectorAll('.page-container > section');
             const buttons = document.querySelectorAll('.btn[data-page]');
-            
+
             // Initialize active page
             showPage('home');
-            
+
             // Navigation links
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const page = this.getAttribute('data-page');
-                    
-                    // Update active nav link
+
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Show selected page
+
                     showPage(page);
-                    
-                    // Close mobile menu if open
                     navMenu.classList.remove('active');
                 });
             });
-            
+
             // Buttons with page navigation
             buttons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const page = this.getAttribute('data-page');
-                    
-                    // Update active nav link
+
                     navLinks.forEach(l => l.classList.remove('active'));
-                    document.querySelector(`.nav-link[data-page="${page}"]`).classList.add('active');
-                    
-                    // Show selected page
+                    const target = document.querySelector(`.nav-link[data-page="${page}"]`);
+                    if (target) target.classList.add('active');
+
                     showPage(page);
                 });
             });
-            
+
             // Mobile menu toggle
             hamburger.addEventListener('click', function() {
                 navMenu.classList.toggle('active');
             });
-            
+
             // Page switching function
             function showPage(pageId) {
                 pages.forEach(page => {
                     if (page.id === pageId) {
-                        page.style.display = 'block';
-                        // Scroll to top of the page
+                        page.style.display = pageId === 'home' ? 'flex' : 'block';
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     } else {
                         page.style.display = 'none';
                     }
                 });
             }
-            
+
             // Form submission
             const contactForm = document.getElementById('messageForm');
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                alert('Message sent! I will contact you soon.');
+                alert('MESSAGE SENT! I will contact you soon.');
                 contactForm.reset();
             });
         });
