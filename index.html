@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ============ RETRO ARCADE STYLE ============ */
+        /* ============ RETRO ARCADE STYLE + 3D ============ */
         * {
             margin: 0;
             padding: 0;
@@ -28,6 +28,8 @@
             --text-dim: #9a9ac0;
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
             background: var(--bg);
             color: var(--text);
@@ -40,6 +42,30 @@
                 linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
+        }
+
+        /* Starfield canvas (3D depth background) */
+        #stars {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Cursor glow */
+        #glow {
+            position: fixed;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.10) 0%, rgba(255, 46, 136, 0.06) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            left: -500px;
+            top: -500px;
         }
 
         /* CRT scanlines overlay */
@@ -74,6 +100,40 @@
         .blink { animation: blink 1s steps(2) infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* ============ 3D UTILITIES ============ */
+        .tilt {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s;
+            position: relative;
+        }
+        .tilt::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 229, 255, 0.14), transparent 65%);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .tilt:hover::after { opacity: 1; }
+
+        /* Scroll reveal (3D entrance) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px) rotateX(10deg);
+            transform-origin: center top;
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0) rotateX(0); }
+
+        /* Page 3D entrance */
+        @keyframes pageIn {
+            from { opacity: 0; transform: perspective(1200px) rotateY(-7deg) translateY(24px); }
+            to { opacity: 1; transform: perspective(1200px) rotateY(0) translateY(0); }
+        }
+        .page-enter { animation: pageIn 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.05) both; }
+
         /* ============ HEADER ============ */
         header {
             display: flex;
@@ -85,9 +145,10 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: #0d0d1a;
+            background: rgba(13, 13, 26, 0.92);
+            backdrop-filter: blur(6px);
             border-bottom: 4px solid var(--pink);
-            box-shadow: 0 4px 0 var(--cyan);
+            box-shadow: 0 4px 0 var(--cyan), 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .logo {
@@ -96,7 +157,9 @@
             color: var(--yellow);
             text-shadow: 3px 3px 0 var(--pink);
             letter-spacing: 1px;
+            transition: transform 0.25s;
         }
+        .logo:hover { transform: perspective(400px) rotateY(12deg) scale(1.05); }
         .logo span { color: var(--cyan); }
 
         .nav-links {
@@ -119,12 +182,13 @@
             background: var(--yellow);
             border-color: var(--yellow);
             box-shadow: 4px 4px 0 var(--pink);
+            transform: translateY(-2px);
         }
 
         .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: var(--yellow); }
 
         /* ============ LAYOUT ============ */
-        .page-container { padding-top: 90px; min-height: calc(100vh - 150px); }
+        .page-container { padding-top: 90px; min-height: calc(100vh - 150px); position: relative; z-index: 2; perspective: 1200px; }
 
         section { padding: 3rem 5%; }
 
@@ -156,7 +220,102 @@
             justify-content: center;
             text-align: center;
             min-height: 80vh;
+            position: relative;
+            overflow: hidden;
         }
+
+        /* Synthwave 3D grid floor */
+        .grid-floor {
+            position: absolute;
+            bottom: -10px;
+            left: -30%;
+            width: 160%;
+            height: 260px;
+            pointer-events: none;
+            background-image:
+                linear-gradient(transparent 0%, rgba(0, 229, 255, 0.28) 2px, transparent 2px),
+                linear-gradient(90deg, transparent 0%, rgba(255, 46, 136, 0.28) 2px, transparent 2px);
+            background-size: 44px 44px;
+            transform: perspective(420px) rotateX(62deg);
+            transform-origin: bottom center;
+            animation: gridMove 1.6s linear infinite;
+            mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent 95%);
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent 95%);
+        }
+        @keyframes gridMove {
+            from { background-position: 0 0, 0 0; }
+            to { background-position: 0 44px, 0 0; }
+        }
+
+        /* Floating 3D scene */
+        .hero-scene {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            perspective: 900px;
+        }
+        .float-el { position: absolute; transform-style: preserve-3d; }
+
+        /* CSS 3D cube */
+        .cube { width: 56px; height: 56px; transform-style: preserve-3d; animation: spinCube 14s linear infinite; }
+        .cube .face {
+            position: absolute;
+            inset: 0;
+            border: 3px solid var(--cyan);
+            background: rgba(0, 229, 255, 0.12);
+            box-shadow: inset 0 0 18px rgba(0, 229, 255, 0.35);
+        }
+        .cube .face:nth-child(1) { transform: translateZ(28px); }
+        .cube .face:nth-child(2) { transform: rotateY(90deg) translateZ(28px); border-color: var(--pink); background: rgba(255, 46, 136, 0.12); }
+        .cube .face:nth-child(3) { transform: rotateY(180deg) translateZ(28px); }
+        .cube .face:nth-child(4) { transform: rotateY(-90deg) translateZ(28px); border-color: var(--pink); background: rgba(255, 46, 136, 0.12); }
+        .cube .face:nth-child(5) { transform: rotateX(90deg) translateZ(28px); border-color: var(--yellow); background: rgba(255, 230, 0, 0.10); }
+        .cube .face:nth-child(6) { transform: rotateX(-90deg) translateZ(28px); border-color: var(--yellow); background: rgba(255, 230, 0, 0.10); }
+        @keyframes spinCube {
+            from { transform: rotateX(-18deg) rotateY(0deg); }
+            to { transform: rotateX(-18deg) rotateY(360deg); }
+        }
+
+        /* Spinning 3D coin */
+        .coin {
+            width: 64px;
+            height: 64px;
+            transform-style: preserve-3d;
+            animation: spinCoin 5s linear infinite;
+        }
+        .coin .coin-face {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 4px solid var(--yellow);
+            background: radial-gradient(circle at 35% 35%, #fff6a8, var(--yellow) 55%, #d9b800);
+            color: #7a5c00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.1rem;
+            backface-visibility: hidden;
+        }
+        .coin .coin-face.back { transform: rotateY(180deg); }
+        @keyframes spinCoin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        /* Floating pixel star */
+        .px-star {
+            font-family: 'Press Start 2P', monospace;
+            color: var(--green);
+            font-size: 1rem;
+            text-shadow: 0 0 12px var(--green);
+            animation: bobY 4s ease-in-out infinite;
+        }
+        @keyframes bobY {
+            0%, 100% { transform: translateY(0) rotateZ(-6deg); }
+            50% { transform: translateY(-18px) rotateZ(8deg); }
+        }
+        .bob { animation: bobY 5s ease-in-out infinite; }
 
         .insert-coin {
             font-family: 'Press Start 2P', monospace;
@@ -172,6 +331,13 @@
             color: var(--yellow);
             text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 rgba(0, 229, 255, 0.4);
             margin-bottom: 1.5rem;
+            animation: heroFloat 6s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-8px) rotateX(4deg); }
         }
 
         .hero-subtitle {
@@ -179,6 +345,8 @@
             font-size: 0.85rem;
             color: var(--cyan);
             margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-text {
@@ -186,7 +354,11 @@
             color: var(--text-dim);
             max-width: 620px;
             margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 2;
         }
+
+        .btn-container { position: relative; z-index: 2; }
 
         .btn {
             display: inline-block;
@@ -199,10 +371,12 @@
             box-shadow: 6px 6px 0 var(--cyan);
             cursor: pointer;
             text-transform: uppercase;
-            transition: transform 0.1s;
+            transition: transform 0.15s, box-shadow 0.15s;
+            transform-style: preserve-3d;
         }
 
-        .btn:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--cyan); color: #fff; }
+        .btn:hover { transform: translate(3px, 3px) translateZ(8px); box-shadow: 3px 3px 0 var(--cyan), 0 12px 24px rgba(255, 46, 136, 0.45); color: #fff; }
+        .btn:active { transform: translate(6px, 6px) translateZ(0); box-shadow: 0 0 0 var(--cyan); }
 
         .btn-outline {
             background: transparent;
@@ -211,7 +385,7 @@
             box-shadow: 6px 6px 0 var(--pink);
             margin-left: 1rem;
         }
-        .btn-outline:hover { color: var(--yellow); box-shadow: 3px 3px 0 var(--pink); }
+        .btn-outline:hover { color: var(--yellow); box-shadow: 3px 3px 0 var(--pink), 0 12px 24px rgba(255, 230, 0, 0.3); }
 
         .hero-stats {
             display: flex;
@@ -219,6 +393,8 @@
             margin-top: 3rem;
             flex-wrap: wrap;
             justify-content: center;
+            position: relative;
+            z-index: 2;
         }
 
         .stat-box {
@@ -227,6 +403,7 @@
             min-width: 150px;
             background: var(--bg2);
         }
+        .stat-box:hover { border-color: var(--yellow); box-shadow: 0 14px 30px rgba(185, 103, 255, 0.35); }
         .stat-box .num {
             font-family: 'Press Start 2P', monospace;
             font-size: 1.2rem;
@@ -237,6 +414,33 @@
             font-size: 0.55rem;
             color: var(--text-dim);
             margin-top: 0.6rem;
+        }
+
+        /* Tech marquee */
+        .marquee {
+            margin-top: 3rem;
+            width: 100%;
+            overflow: hidden;
+            border-top: 3px dashed var(--purple);
+            border-bottom: 3px dashed var(--purple);
+            padding: 0.6rem 0;
+            position: relative;
+            z-index: 2;
+            background: rgba(20, 20, 40, 0.6);
+        }
+        .marquee-track {
+            display: inline-flex;
+            gap: 2.5rem;
+            white-space: nowrap;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: var(--cyan);
+            animation: marqueeMove 22s linear infinite;
+        }
+        .marquee-track span:nth-child(even) { color: var(--pink); }
+        @keyframes marqueeMove {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
         }
 
         /* ============ ABOUT ============ */
@@ -257,7 +461,8 @@
             overflow: hidden;
             image-rendering: pixelated;
         }
-        .about-image img { width: 100%; display: block; filter: saturate(1.3) contrast(1.1); }
+        .about-image:hover { box-shadow: 14px 14px 0 var(--pink); }
+        .about-image img { width: 100%; display: block; filter: saturate(1.3) contrast(1.1); transform: translateZ(20px); }
 
         .about-text { flex: 1; }
         .about-text h3 {
@@ -285,7 +490,9 @@
         }
         .skill-progress-bar {
             height: 100%;
+            width: 0;
             background: repeating-linear-gradient(90deg, var(--pink) 0 8px, var(--yellow) 8px 16px);
+            transition: width 1s cubic-bezier(0.2, 0.8, 0.3, 1);
         }
 
         /* ============ PORTFOLIO ============ */
@@ -295,6 +502,7 @@
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            perspective: 1000px;
         }
 
         .portfolio-item {
@@ -302,12 +510,12 @@
             border: 4px solid var(--cyan);
             box-shadow: 8px 8px 0 var(--purple);
             overflow: hidden;
-            transition: transform 0.15s;
         }
-        .portfolio-item:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--pink); }
+        .portfolio-item:hover { box-shadow: 12px 12px 0 var(--pink), 0 20px 40px rgba(0, 0, 0, 0.5); }
 
         .portfolio-image { width: 100%; height: 200px; overflow: hidden; border-bottom: 4px solid var(--cyan); }
-        .portfolio-image img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; filter: saturate(1.3); }
+        .portfolio-image img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; filter: saturate(1.3); transition: transform 0.4s; }
+        .portfolio-item:hover .portfolio-image img { transform: scale(1.08) translateZ(10px); }
 
         .portfolio-content { padding: 1.2rem; }
         .portfolio-title { font-size: 0.8rem; color: var(--yellow); margin-bottom: 0.8rem; line-height: 1.6; }
@@ -323,7 +531,7 @@
         .portfolio-description { color: var(--text-dim); font-size: 1.35rem; }
 
         /* ============ PROJECTS (REPOS) ============ */
-        .repo-list { max-width: 900px; margin: 0 auto; }
+        .repo-list { max-width: 900px; margin: 0 auto; perspective: 1000px; }
         .repo-row {
             display: flex;
             justify-content: space-between;
@@ -336,7 +544,7 @@
             box-shadow: 5px 5px 0 var(--pink);
             flex-wrap: wrap;
         }
-        .repo-row:hover { border-color: var(--yellow); }
+        .repo-row:hover { border-color: var(--yellow); box-shadow: 8px 8px 0 var(--pink), 0 16px 32px rgba(57, 255, 20, 0.18); }
         .repo-name { font-family: 'Press Start 2P', monospace; font-size: 0.65rem; color: var(--cyan); line-height: 1.7; }
         .repo-desc { color: var(--text-dim); font-size: 1.3rem; margin-top: 0.4rem; }
         .repo-link {
@@ -346,8 +554,9 @@
             background: var(--green);
             padding: 0.6rem 0.9rem;
             white-space: nowrap;
+            transition: transform 0.15s, background 0.15s;
         }
-        .repo-link:hover { color: var(--bg); background: var(--yellow); }
+        .repo-link:hover { color: var(--bg); background: var(--yellow); transform: translateZ(10px) scale(1.05); }
 
         /* ============ CONTACT ============ */
         .contact-container {
@@ -355,6 +564,7 @@
             gap: 2.5rem;
             max-width: 1100px;
             margin: 0 auto;
+            perspective: 1000px;
         }
         .contact-info, .contact-form { flex: 1; }
 
@@ -365,6 +575,7 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
+        .contact-card:hover { box-shadow: 12px 12px 0 var(--pink), 0 18px 36px rgba(0, 0, 0, 0.5); }
         .contact-card h3 {
             font-size: 0.8rem;
             color: var(--yellow);
@@ -389,9 +600,9 @@
             color: var(--yellow);
             font-size: 1.3rem;
             box-shadow: 4px 4px 0 var(--pink);
-            transition: transform 0.1s;
+            transition: transform 0.15s, box-shadow 0.15s;
         }
-        .social-links a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--pink); color: var(--yellow); }
+        .social-links a:hover { transform: translate(2px, 2px) translateZ(8px); box-shadow: 2px 2px 0 var(--pink), 0 10px 20px rgba(255, 230, 0, 0.3); color: var(--yellow); }
 
         .form-group { margin-bottom: 1.2rem; }
         .form-group label {
@@ -409,8 +620,9 @@
             color: var(--green);
             font-family: 'VT323', monospace;
             font-size: 1.4rem;
+            transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
         }
-        .form-control:focus { outline: none; border-color: var(--yellow); }
+        .form-control:focus { outline: none; border-color: var(--yellow); transform: translateZ(6px); box-shadow: 0 8px 20px rgba(255, 230, 0, 0.2); }
         textarea.form-control { min-height: 140px; resize: vertical; }
 
         /* ============ FOOTER ============ */
@@ -421,6 +633,8 @@
             text-align: center;
             margin-top: 2rem;
             background: #0a0a14;
+            position: relative;
+            z-index: 2;
         }
         .footer-logo {
             font-family: 'Press Start 2P', monospace;
@@ -459,10 +673,19 @@
             .btn-container { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
             .btn-outline { margin-left: 0; }
             .section-title { font-size: 1rem; }
+            .hero-scene { display: none; }
+            .grid-floor { height: 180px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .reveal { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body>
+    <canvas id="stars" aria-hidden="true"></canvas>
+    <div id="glow" aria-hidden="true"></div>
     <!-- Header -->
     <header>
         <div class="logo">AKBAR<span>·LAB</span></div>
@@ -484,6 +707,26 @@
     <div class="page-container">
         <!-- Home Page -->
         <section id="home">
+            <div class="grid-floor" aria-hidden="true"></div>
+            <div class="hero-scene" aria-hidden="true">
+                <div class="float-el bob" style="top: 14%; left: 8%;" data-depth="22">
+                    <div class="cube">
+                        <div class="face"></div><div class="face"></div><div class="face"></div>
+                        <div class="face"></div><div class="face"></div><div class="face"></div>
+                    </div>
+                </div>
+                <div class="float-el" style="top: 20%; right: 9%;" data-depth="34">
+                    <div class="coin"><div class="coin-face">A</div><div class="coin-face back">★</div></div>
+                </div>
+                <div class="float-el bob" style="bottom: 26%; right: 13%; animation-delay: -2s;" data-depth="16">
+                    <div class="cube" style="width: 38px; height: 38px; animation-duration: 10s;">
+                        <div class="face"></div><div class="face"></div><div class="face"></div>
+                        <div class="face"></div><div class="face"></div><div class="face"></div>
+                    </div>
+                </div>
+                <div class="float-el px-star" style="top: 52%; left: 5%;" data-depth="44">✦</div>
+                <div class="float-el px-star" style="top: 12%; right: 30%; animation-delay: -1.5s;" data-depth="28">✦</div>
+            </div>
             <div class="insert-coin">● INSERT COIN ●<span class="blink">_</span></div>
             <h1 class="hero-title">AKBAR<br>RAMADHAN</h1>
             <h2 class="hero-subtitle">» THE SHADOW MONARCH «</h2>
@@ -493,17 +736,23 @@
                 <a href="#" class="btn btn-outline" data-page="contact">Contact Me</a>
             </div>
             <div class="hero-stats">
-                <div class="stat-box">
-                    <div class="num">18</div>
+                <div class="stat-box tilt" data-tilt>
+                    <div class="num" data-count="18">0</div>
                     <div class="label">LANGUAGES</div>
                 </div>
-                <div class="stat-box">
-                    <div class="num">172</div>
+                <div class="stat-box tilt" data-tilt>
+                    <div class="num" data-count="172">0</div>
                     <div class="label">CODE EXAMPLES</div>
                 </div>
-                <div class="stat-box">
-                    <div class="num">21</div>
+                <div class="stat-box tilt" data-tilt>
+                    <div class="num" data-count="21">0</div>
                     <div class="label">REPOS</div>
+                </div>
+            </div>
+            <div class="marquee" aria-hidden="true">
+                <div class="marquee-track">
+                    <span>PYTHON</span><span>◆</span><span>JAVASCRIPT</span><span>◆</span><span>AI AGENTS</span><span>◆</span><span>NETWORKS</span><span>◆</span><span>WEB DEV</span><span>◆</span><span>C++</span><span>◆</span><span>SQL</span><span>◆</span><span>GAME DEV</span><span>◆</span>
+                    <span>PYTHON</span><span>◆</span><span>JAVASCRIPT</span><span>◆</span><span>AI AGENTS</span><span>◆</span><span>NETWORKS</span><span>◆</span><span>WEB DEV</span><span>◆</span><span>C++</span><span>◆</span><span>SQL</span><span>◆</span><span>GAME DEV</span><span>◆</span>
                 </div>
             </div>
         </section>
@@ -512,10 +761,10 @@
         <section id="about">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
-                <div class="about-image">
+                <div class="about-image tilt reveal" data-tilt>
                     <img src="IMG_20250609_192230.png" alt="Akbar Ramadhan">
                 </div>
-                <div class="about-text">
+                <div class="about-text reveal">
                     <h3>FROM ZERO TO PLAYER ONE</h3>
                     <p>Starting from someone who knew nothing — joined the flag raising team (Paskibra), learned to adapt, became chairman of the student council (OSIS), and faced a lot of trouble along the way.</p>
                     <p>School and family problems hit hard, but they made me strong in any battle. Now: coding, networks, and building things people can actually learn from.</p>
@@ -527,7 +776,7 @@
                                 <span class="skill-percent">90%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" style="width: 90%"></div>
+                                <div class="skill-progress-bar" data-w="90"></div>
                             </div>
                         </div>
 
@@ -537,7 +786,7 @@
                                 <span class="skill-percent">88%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" style="width: 88%"></div>
+                                <div class="skill-progress-bar" data-w="88"></div>
                             </div>
                         </div>
 
@@ -547,7 +796,7 @@
                                 <span class="skill-percent">75%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" style="width: 75%"></div>
+                                <div class="skill-progress-bar" data-w="75"></div>
                             </div>
                         </div>
 
@@ -557,7 +806,7 @@
                                 <span class="skill-percent">98%</span>
                             </div>
                             <div class="skill-progress">
-                                <div class="skill-progress-bar" style="width: 98%"></div>
+                                <div class="skill-progress-bar" data-w="98"></div>
                             </div>
                         </div>
                     </div>
@@ -569,7 +818,7 @@
         <section id="portfolio">
             <h2 class="section-title">My Quests</h2>
             <div class="portfolio-grid">
-                <div class="portfolio-item">
+                <div class="portfolio-item tilt reveal" data-tilt>
                     <div class="portfolio-image">
                         <img src="IMG_20250609_175430.jpg" alt="Paskibra">
                     </div>
@@ -580,7 +829,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-item">
+                <div class="portfolio-item tilt reveal" data-tilt>
                     <div class="portfolio-image">
                         <img src="IMG_20250609_182119.png" alt="Pramuka">
                     </div>
@@ -591,7 +840,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-item">
+                <div class="portfolio-item tilt reveal" data-tilt>
                     <div class="portfolio-image">
                         <img src="IMG_20250609_185357.png" alt="OSIS">
                     </div>
@@ -602,7 +851,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-item">
+                <div class="portfolio-item tilt reveal" data-tilt>
                     <div class="portfolio-image">
                         <img src="SnapInsta.to_465500074_475238904938650_5513405550943766324_n.jpg" alt="Lacostar">
                     </div>
@@ -619,147 +868,147 @@
         <section id="projects">
             <h2 class="section-title">My Projects</h2>
             <div class="repo-list">
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">AWESOME-AI-AGENT-SKILLS</div>
                         <div class="repo-desc">A curated collection of ready-to-use skills for AI coding agents — Claude Code, Cursor, Codex, and more. 15 original skills.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/awesome-ai-agent-skills" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">LEARN-ALL-PROGRAMMING-LANGUAGES</div>
                         <div class="repo-desc">18 languages, 172 real code examples, full mini-courses + 12-week roadmap. In English.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/learn-all-programming-languages" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">KURSUS-SEMUA-BAHASA-PEMROGRAMAN</div>
                         <div class="repo-desc">Kursus lengkap 18 bahasa pemrograman — berbahasa Indonesia, dengan contoh kode nyata.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/kursus-semua-bahasa-pemrograman" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">FULL-COURSE-SEMUA-JURUSAN</div>
                         <div class="repo-desc">Full course untuk mahasiswa semua jurusan: jalur belajar, kursus gratis, dan panduan karier.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/full-course-semua-jurusan" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">AWESOME-AI-INDONESIA</div>
                         <div class="repo-desc">Daftar kurasi ekosistem AI Indonesia: model bahasa, dataset, komunitas, kursus, dan tools.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/awesome-ai-indonesia" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">WORLD-NEWS-20-NOVEMBER-2026-IMAGE</div>
                         <div class="repo-desc">World News 20 November 2026 in one image — a newspaper front page summarising the day's world news. make.fun bounty.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/world-news-20-november-2026-image" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">WORLD-NEWS-19-NOVEMBER-2026-IMAGE</div>
                         <div class="repo-desc">World News 19 November 2026 in one image — make.fun bounty.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/world-news-19-november-2026-image" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">GTA6-OPEN-WORLD-GAME</div>
                         <div class="repo-desc">Open-world crime game in the spirit of GTA 6 — make.fun bounty entry.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/gta6-open-world-game" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">TOKEN-LAUNCH-RADAR</div>
                         <div class="repo-desc">Token Launch Radar — 198 pre-token protocols ranked by implied token value. make.fun bounty.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/token-launch-radar" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">GTA6-TROPHY-GUIDE</div>
                         <div class="repo-desc">GTA 6 trophy guide and tracker — make.fun bounty entry.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/gta6-trophy-guide" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">GTA6-COVER-ART-MAKER</div>
                         <div class="repo-desc">Turn any photo and caption into GTA 6-style cover art — make.fun bounty entry.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/gta6-cover-art-maker" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">GTA6-TROPHY-RARITY-FORECAST</div>
                         <div class="repo-desc">Forecasts GTA VI PS5 trophy earn rates a week after launch — make.fun bounty.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/gta6-trophy-rarity-forecast" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">TINY-CHESS-4KB</div>
                         <div class="repo-desc">Strongest chess engine in 4 KB of Python — make.fun tiny-chess bounty.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/tiny-chess-4kb" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">GETTING-STARTED-WITH-MAKE-FUN</div>
                         <div class="repo-desc">Getting started with make.fun — a tutorial for humans and their AI agents.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/getting-started-with-make-fun" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">SATELIT</div>
                         <div class="repo-desc">Satelit Starlink — 3000+ data.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/Satelit" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">PERPUSTAKAAN-MTSN2SUBANG</div>
                         <div class="repo-desc">Perpustakaan MTSN 2 Subang — library project.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/PERPUSTAKAAN-MTSN2SUBANG" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">DEMO-WEB</div>
                         <div class="repo-desc">Demo website project.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/demo-web" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">DAILYSUCCES-</div>
                         <div class="repo-desc">Web project.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/DailySucces-" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">AKBAR-LAB-DROID</div>
                         <div class="repo-desc">GitHub profile repository.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/Akbar-Lab-droid" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">AKBAR-LAB-DROID.GITHUB.IO</div>
                         <div class="repo-desc">This website — retro arcade portfolio.</div>
                     </div>
                     <a class="repo-link" href="https://github.com/Akbar-Lab-Droid/Akbar-Lab-Droid.github.io" target="_blank" rel="noopener">OPEN ▶</a>
                 </div>
-                <div class="repo-row">
+                <div class="repo-row tilt reveal" data-tilt>
                     <div>
                         <div class="repo-name">AIPROXCROP — AI LEARNING</div>
                         <div class="repo-desc">Komunitas belajar AI berbahasa Indonesia. Seri video edukasi "Ayo Belajar Bersama AIPROXCROP", 90 detik per episode.</div>
@@ -774,7 +1023,7 @@
             <h2 class="section-title">Contact Me</h2>
             <div class="contact-container">
                 <div class="contact-info">
-                    <div class="contact-card">
+                    <div class="contact-card tilt reveal" data-tilt>
                         <h3>GET IN TOUCH</h3>
                         <div class="contact-detail">
                             <i class="fas fa-map-marker-alt"></i>
@@ -804,7 +1053,7 @@
                         </div>
                     </div>
 
-                    <div class="contact-card">
+                    <div class="contact-card tilt reveal" data-tilt>
                         <h3>AVAILABLE FOR</h3>
                         <div class="contact-detail">
                             <i class="fas fa-code"></i>
@@ -830,7 +1079,7 @@
                     </div>
                 </div>
 
-                <div class="contact-form">
+                <div class="contact-form reveal">
                     <h3>SEND A MESSAGE</h3>
                     <form id="messageForm">
                         <div class="form-group">
@@ -873,9 +1122,11 @@
             const navMenu = document.getElementById('navLinks');
             const pages = document.querySelectorAll('.page-container > section');
             const buttons = document.querySelectorAll('.btn[data-page]');
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             // Initialize active page
             showPage('home');
+            countUp();
 
             // Navigation links
             navLinks.forEach(link => {
@@ -910,15 +1161,51 @@
                 navMenu.classList.toggle('active');
             });
 
-            // Page switching function
+            // Page switching function (with 3D entrance + reveal + skill bars)
             function showPage(pageId) {
                 pages.forEach(page => {
                     if (page.id === pageId) {
                         page.style.display = pageId === 'home' ? 'flex' : 'block';
+                        page.classList.remove('page-enter');
+                        void page.offsetWidth; // restart animation
+                        page.classList.add('page-enter');
                         window.scrollTo({ top: 0, behavior: 'smooth' });
+                        revealIn(page);
+                        if (pageId === 'about') animateSkills();
                     } else {
                         page.style.display = 'none';
                     }
+                });
+            }
+
+            // Reveal elements inside a page, staggered
+            function revealIn(page) {
+                const items = page.querySelectorAll('.reveal:not(.visible)');
+                items.forEach((el, i) => {
+                    el.style.transitionDelay = reduced ? '0ms' : (Math.min(i, 8) * 70) + 'ms';
+                    requestAnimationFrame(() => el.classList.add('visible'));
+                });
+            }
+
+            // Skill bars animate to their data-w value
+            function animateSkills() {
+                document.querySelectorAll('.skill-progress-bar').forEach(bar => {
+                    bar.style.width = '0';
+                    setTimeout(() => { bar.style.width = bar.getAttribute('data-w') + '%'; }, 120);
+                });
+            }
+
+            // Count-up hero stats
+            function countUp() {
+                document.querySelectorAll('[data-count]').forEach(el => {
+                    const target = parseInt(el.getAttribute('data-count'), 10);
+                    if (reduced) { el.textContent = target; return; }
+                    const dur = 1200, t0 = performance.now();
+                    (function tick(now) {
+                        const p = Math.min((now - t0) / dur, 1);
+                        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+                        if (p < 1) requestAnimationFrame(tick);
+                    })(t0);
                 });
             }
 
@@ -929,6 +1216,87 @@
                 alert('MESSAGE SENT! I will contact you soon.');
                 contactForm.reset();
             });
+
+            // ============ 3D TILT (mouse-follow cards) ============
+            const fine = window.matchMedia('(pointer: fine)').matches;
+            if (fine && !reduced) {
+                document.querySelectorAll('[data-tilt]').forEach(card => {
+                    card.addEventListener('pointermove', e => {
+                        const r = card.getBoundingClientRect();
+                        const px = (e.clientX - r.left) / r.width;
+                        const py = (e.clientY - r.top) / r.height;
+                        const rx = (0.5 - py) * 12;
+                        const ry = (px - 0.5) * 12;
+                        card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(8px)`;
+                        card.style.setProperty('--mx', (px * 100) + '%');
+                        card.style.setProperty('--my', (py * 100) + '%');
+                    });
+                    card.addEventListener('pointerleave', () => {
+                        card.style.transform = '';
+                    });
+                });
+
+                // Hero parallax: floating 3D elements drift with the mouse
+                const home = document.getElementById('home');
+                const layers = document.querySelectorAll('.hero-scene .float-el');
+                home.addEventListener('pointermove', e => {
+                    const cx = (e.clientX / window.innerWidth - 0.5);
+                    const cy = (e.clientY / window.innerHeight - 0.5);
+                    layers.forEach(el => {
+                        const d = parseFloat(el.getAttribute('data-depth') || 20);
+                        el.style.translate = `${(-cx * d).toFixed(1)}px ${(-cy * d).toFixed(1)}px`;
+                    });
+                });
+            }
+
+            // ============ CURSOR GLOW ============
+            const glow = document.getElementById('glow');
+            if (fine && !reduced) {
+                let gx = -500, gy = -500, tx = -500, ty = -500;
+                document.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; });
+                (function follow() {
+                    gx += (tx - gx) * 0.08;
+                    gy += (ty - gy) * 0.08;
+                    glow.style.left = gx + 'px';
+                    glow.style.top = gy + 'px';
+                    requestAnimationFrame(follow);
+                })();
+            } else {
+                glow.style.display = 'none';
+            }
+
+            // ============ 3D STARFIELD CANVAS ============
+            const canvas = document.getElementById('stars');
+            const ctx = canvas.getContext('2d');
+            let stars = [], W = 0, H = 0;
+            function sizeStars() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+                stars = Array.from({ length: Math.min(140, Math.floor(W * H / 12000)) }, () => ({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    z: 0.25 + Math.random() * 0.75, // depth: nearer = bigger + faster
+                    tw: Math.random() * Math.PI * 2
+                }));
+            }
+            sizeStars();
+            window.addEventListener('resize', sizeStars);
+            const palette = ['#00e5ff', '#ff2e88', '#ffe600', '#e8e8ff', '#39ff14'];
+            (function drawStars() {
+                ctx.clearRect(0, 0, W, H);
+                const t = Date.now() / 1000;
+                stars.forEach(s => {
+                    s.y += 0.12 * s.z; // slow drift, nearer stars fall faster
+                    if (s.y > H + 4) { s.y = -4; s.x = Math.random() * W; }
+                    const a = 0.25 + 0.55 * Math.abs(Math.sin(t * 0.8 + s.tw)) * s.z;
+                    ctx.globalAlpha = a;
+                    ctx.fillStyle = palette[Math.floor(s.z * palette.length) % palette.length];
+                    const r = 0.6 + s.z * 1.8;
+                    ctx.fillRect(s.x, s.y, r, r); // square pixels, retro style
+                });
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(drawStars);
+            })();
         });
     </script>
 </body>
